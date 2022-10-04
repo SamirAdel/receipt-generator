@@ -4,9 +4,11 @@
   return response.json();
 }).then(function(data) {
   console.log(data);
+      document.getElementById("content").innerHtml = data.Method;
 }).catch(function() {
   console.log("Booo");
 });
   </script>
   Samir
+  <div id="content"><div>
 </html>
