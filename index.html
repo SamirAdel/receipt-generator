@@ -1,1 +1,12 @@
-<html>Samir</html>
+<html>
+  <script>
+    fetch("https://script.google.com/macros/s/AKfycbwVMm5ONUPwEF6XNWiNx14uiRPlbCVi6GsqTU9PFm_s6VoGM0wb74i3vrYCRSjofW_RSg/exec?method=users").then(function(response) {
+  return response.json();
+}).then(function(data) {
+  console.log(data);
+}).catch(function() {
+  console.log("Booo");
+});
+  </script>
+  Samir
+</html>
