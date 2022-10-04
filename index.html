@@ -4,7 +4,7 @@
   return response.json();
 }).then(function(data) {
   console.log(data);
-      document.getElementById("content").innerHtml = data.Method;
+      document.getElementById("content").innerHTML = data.Method;
 }).catch(function() {
   console.log("Booo");
 });
