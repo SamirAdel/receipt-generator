@@ -1,14 +1,466 @@
+<!DOCTYPE html>
 <html>
-  <script>
-    fetch("https://script.google.com/macros/s/AKfycbwVMm5ONUPwEF6XNWiNx14uiRPlbCVi6GsqTU9PFm_s6VoGM0wb74i3vrYCRSjofW_RSg/exec?method=users").then(function(response) {
-  return response.json();
-}).then(function(data) {
-  console.log(data);
-      document.getElementById("content").innerHTML = data.Method;
-}).catch(function() {
-  console.log("Booo");
-});
-  </script>
-  Samir
-  <div id="content"><div>
+<head>
+    <title>Sanofi Data Entry Form</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+        html, body {
+            min-height: 100%;
+        }
+
+        body, div, form, input, select {
+            padding: 0;
+            margin: 0;
+            outline: none;
+            font-family: Roboto, Arial, sans-serif;
+            font-size: 14px;
+            color: #666;
+            line-height: 22px;
+        }
+
+        h1, h4 {
+            margin: 15px 0 4px;
+            font-weight: 400;
+        }
+
+        h4 {
+            margin: 20px 0 4px;
+            font-weight: 400;
+        }
+
+        span {
+            color: red;
+        }
+
+        .small {
+            font-size: 10px;
+            line-height: 18px;
+        }
+
+        .testbox {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: inherit;
+            padding: 3px;
+        }
+
+        form {
+            width: 100%;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 5px #ccc;
+        }
+
+        input {
+            width: calc(100% - 10px);
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            vertical-align: middle;
+        }
+
+            input:hover, textarea:hover, select:hover {
+                outline: none;
+                border: 1px solid #095484;
+                background: #e6eef7;
+            }
+
+        .title-block select, .title-block input {
+            margin-bottom: 10px;
+        }
+
+        select {
+            padding: 7px 0;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            background: transparent;
+        }
+
+        select, table {
+            width: 100%;
+        }
+
+        option {
+            background: #fff;
+        }
+
+        .day-visited, .time-visited {
+            position: relative;
+        }
+
+        input[type="date"]::-webkit-inner-spin-button {
+            display: none;
+        }
+
+        input[type="time"]::-webkit-inner-spin-button {
+            margin: 2px 22px 0 0;
+        }
+
+        .day-visited i, .time-visited i, input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            top: 8px;
+            font-size: 20px;
+        }
+
+        .day-visited i, .time-visited i {
+            right: 5px;
+            z-index: 1;
+            color: #a9a9a9;
+        }
+
+        [type="date"]::-webkit-calendar-picker-indicator {
+            right: 0;
+            z-index: 2;
+            opacity: 0;
+        }
+
+        .question-answer label {
+            display: block;
+            padding: 0 20px 10px 0;
+        }
+
+        .question-answer input {
+            width: auto;
+            margin-top: -2px;
+        }
+
+        th, td {
+            width: 18%;
+            padding: 15px 0;
+            border-bottom: 1px solid #ccc;
+            text-align: center;
+            vertical-align: unset;
+            line-height: 18px;
+            font-weight: 400;
+            word-break: break-all;
+        }
+
+        .first-col {
+            width: 25%;
+            text-align: left;
+        }
+
+        textarea {
+            width: calc(100% - 6px);
+        }
+
+        .btn-block {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            width: 150px;
+            padding: 10px;
+            border: none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            background-color: #095484;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #0666a3;
+            }
+
+        @media (min-width: 568px) {
+            .title-block {
+                display: flex;
+                justify-content: space-between;
+            }
+
+                .title-block select {
+                    width: 30%;
+                    margin-bottom: 0;
+                }
+
+                .title-block input {
+                    width: 31%;
+                    margin-bottom: 0;
+                }
+
+            th, td {
+                word-break: keep-all;
+            }
+        }
+    </style>
+    <script>
+    fetch("https://script.google.com/macros/s/AKfycbwVMm5ONUPwEF6XNWiNx14uiRPlbCVi6GsqTU9PFm_s6VoGM0wb74i3vrYCRSjofW_RSg/exec?method=users").then(function (response) {
+            return response.json();
+        }).then(function (data) {
+            console.log(data);
+            document.getElementById("content").innerHTML = data.Method;
+        }).catch(function () {
+            console.log("Booo");
+        });</script>
+</head>
+<body>
+    <div class="testbox">  
+        <form action="/">
+            <h1>Sanofi Data Entry Form</h1>
+            <h4>Account Code<span>*</span></h4>
+            <div class="row">
+                <div class="col-9">
+                    <input type="text" name="name" id="code" />
+                </div>
+                <div class="col-3">
+                    <button type="button" id="btn__code">Get Account</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h4>REP . Name:</h4>
+                    <div>Samir Adel</div>
+                </div>
+                <div class="col-3">
+                    <h4>SUP . Name:</h4>
+                    <div>Michael Youssef</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h4>ADHOC:</h4>
+                    <input type="text" name="name" id="adhoc" />
+                </div>
+                <div class="col-3">
+                    <h4>No ADHOC?</h4>
+                    <select>
+                        <option value=""></option>
+                        <option value="1">IBN SINA</option>
+                        <option value="2">New-Pharm</option>
+                        <option value="3">Ramco</option>
+                        <option value="4">Ucp</option>
+                        <option value="5">Overseas</option>
+                        <option value="6">EgyDrug</option>
+                        <option value="7">Multi-Pharm</option>
+
+                    </select>
+                </div>
+                <div class="col-3">
+                    <h4>W.H code:</h4>
+                    <input type="text" name="name" id="adhoc" />
+                </div>
+                <div class="col-3">
+                    <button type="button" id="btn__code">Get Account</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <h4>adhoc code:</h4>
+                    <div>Samir Adel</div>
+                </div>
+                <div class="col-3">
+                    <h4>Account name:</h4>
+                    <div>Samir Adel</div>
+                </div>
+                <div class="col-3">
+                    <h4>Account Address:</h4>
+                    <div>Samir Adel</div>
+                </div>
+                <div class="col-3">
+                    <h4>Region:</h4>
+                    <div>Samir Adel</div>
+                </div>
+                <div class="col-3">
+                    <h4>City:</h4>
+                    <div>Samir Adel</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h4>Account Type</h4>
+                    <select>
+                        <option value=""></option>
+                        <option value="1">DIS</option>
+                        <option value="2">COM</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <h4>Contract Status</h4>
+                    <select>
+                        <option value=""></option>
+                        <option value="1">A</option>
+                        <option value="2">B</option>
+                        <option value="3">C</option>
+                        <option value="4">NON</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <h4>Displays</h4>
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Telfast D CTU
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Bronchicum Lozenges
+                            CTU
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Maalox
+                            CTU corrugated
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            "Bisolvon CTU
+                            Corrugated"
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Bisolvon CTU Acrylic
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Double brand CTU
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Double brand FSU
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Contract Elements</h4>
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            CTU
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            FSU
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Gondola
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Shelf
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>Outdoor visibility</h4>
+                <div class="row">
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            Banner
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            light box
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            See-through
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <h6 class="text-center">
+                            face shield
+                        </h6>
+                        <div class="text-center">
+                            <input type="checkbox" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <h4>Visit Status</h4>
+                    <select>
+                        <option value=""></option>
+                        <option value="1">Trax ON</option>
+                        <option value="2">Trax OFF</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <h4>Doliprane detailing</h4>
+                    <select>
+                        <option value=""></option>
+                        <option value="1">Done</option>
+                        <option value="2">Not Done</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <h4>Feedback</h4>
+                <textarea rows="5"></textarea>
+                <h4>Other</h4>
+                <textarea rows="5"></textarea>
+                <h4>Survey link</h4>
+                <input type="text" name="name" id="code" />
+            </div>
+                <div class="btn-block">
+                    <button type="submit" href="/">Send Feedback</button>
+                </div>
+        </form>
+    </div>
+</body>
 </html>
